@@ -45,5 +45,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 0}
+  _startingPos: {x: 0, y: 1.74, z: 0}
   _damageOnReset: 1
   _fallThreshold: -10
+  _maxTimer: 60
+  _onTimerChange:
+    m_PersistentCalls:
+      m_Calls: []
+  _onTimerEnd:
+    m_PersistentCalls:
+      m_Calls: []

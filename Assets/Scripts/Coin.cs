@@ -17,6 +17,7 @@ public class Coin : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             other.GetComponentInParent<PlayerController>().SetSecondJump(true);
+            other.GetComponentInParent<PlayerController>()._onSecondJump?.Invoke(true);
             score += value;
             _onCoinCollected?.Invoke(score);
             gameObject.SetActive(false);
@@ -28,7 +29,6 @@ public class Coin : MonoBehaviour
     {
         Invoke("SetActiveTrue", _setActiveDelay);
         value = 0;
-
     }
 
     public void SetActiveTrue()

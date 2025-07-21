@@ -12,6 +12,7 @@ public class LifeController : MonoBehaviour
     [SerializeField] private bool _maxHpOnStart = true;
 
     public UnityEvent<int, int> OnLifeChanged; //hp, max hp
+    public UnityEvent _onDeath;
 
     public int GetHp() => _hp;
     public int GetMaxHp() => _maxHp;
@@ -42,6 +43,7 @@ public class LifeController : MonoBehaviour
     {
         SetHp(_hp - damage);
         Debug.Log($"Damage taken: {damage}. Current HP: {_hp}/{_maxHp}");
+        OnLifeChanged?.Invoke(_hp, _maxHp);
         if (_hp <= 0)
         {
             Die(gameObject);
@@ -53,7 +55,7 @@ public class LifeController : MonoBehaviour
         SetHp(_hp + amount);
     }
 
-    private void Die(GameObject target)
+    public void Die(GameObject target)
     {
         if (_hp > 0) return;
         else
@@ -63,7 +65,9 @@ public class LifeController : MonoBehaviour
                 Debug.Log("Player has died.");
                 _hp = 0;
                 Destroy(target);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Da modificare per caricare la scena di Game Over o simile
+                _onDeath?.Invoke();
+                
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Da modificare per caricare la scena di Game Over o simile
             }
             else
             {

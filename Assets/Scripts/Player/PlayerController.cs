@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public bool _hasSecondJump { get; set; }
     public bool _isMoving { get; private set; }
 
+    public UnityEvent<bool> _onSecondJump;
+
     private void Awake()
     {
         _rb = GetComponentInParent<Rigidbody>();
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
         v = Input.GetAxis("Vertical");
         if (IsGrounded())
         {
-            SetSecondJump(false); // Reset second jump when groundedw
+            SetSecondJump(false); // Reset second jump when grounded
         }
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
@@ -79,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public void SetSecondJump(bool value)
     {
         _hasSecondJump = value;
+        _onSecondJump?.Invoke(value);
         if (value == true)
         {
             Debug.Log("Second jump enabled");
