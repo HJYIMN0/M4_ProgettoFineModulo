@@ -35,4 +35,10 @@ public class Coin : MonoBehaviour
     {
         gameObject.SetActive(true);
     }
+
+    //private void Update()
+    //{
+    //    Debug.Log(value);
+    //    Debug.Log($"score uguale a {score}");
+    //}
 }

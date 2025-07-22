@@ -84,11 +84,11 @@ public class MovingPlatform : Movable
 
         if (_isMovingForward)
         {
-            dir = Vector3.forward;
+            dir = transform.forward;
         }
         else
         {
-            dir = Vector3.back;
+            dir = - transform.forward;
         }
 
         _rb.MovePosition(transform.position + dir * _speed * Time.fixedDeltaTime);

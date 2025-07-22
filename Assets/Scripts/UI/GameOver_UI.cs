@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,16 +18,33 @@ public class GameOver_UI : MonoBehaviour
 
     private void Start()
     {
+        _canvasGroup.gameObject.SetActive(true);
         _canvasGroup.alpha = 0;
         _canvasGroup.interactable = false;
+    }
+
+    private void Update()
+    {
+        if (_canvasGroup.alpha >= 1) Time.timeScale = 0;
     }
 
     public void CallGameOver()
     {
         gameObject.SetActive(true);
+        GameObject[] uiElements = GameObject.FindGameObjectsWithTag("UI");
+        //foreach (GameObject uiElement in uiElements)
+        //{
+        //    if (!uiElement.gameObject == this.gameObject)
+        //    {
+        //        uiElement.gameObject.SetActive(false);                
+        //    }
+        //    gameObject.SetActive(false); 
+        //}
         _canvasGroup.interactable = true;
         StartCoroutine("FadeIn");
-        //Time.timeScale = 0;
+
+       
+        
     }
     private IEnumerator FadeIn()
     {
@@ -38,6 +56,7 @@ public class GameOver_UI : MonoBehaviour
     }
     public void Quit()
     {
+        Debug.Log("I'm changing scene");
         SceneManager.LoadScene("Main Menu");
     }
 

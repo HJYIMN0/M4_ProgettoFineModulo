@@ -65,5 +65,7 @@ public class PauseMenu_Ui : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.name);
     }
+
+    public void TestButtons() => Debug.Log("Button pressed!");
 }
 

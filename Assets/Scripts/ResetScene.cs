@@ -42,6 +42,14 @@ public class ResetScene : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (_startingPos == Vector3.zero)
+        {
+            _startingPos = _player.transform.position;
+        }
+    }
+
     private void Update()
     {
         IsPlayerFalling();
@@ -78,9 +86,9 @@ public class ResetScene : MonoBehaviour
     {
         if (IsALive())
         {
-            _player.transform.position = _startingPos; // Reset to origin or a specific spawn point
+            _player.transform.position = _startingPos;
             _playerRb.velocity = Vector3.zero; // Reset velocity
-            _playerRb.angularVelocity = Vector3.zero; // Reset angular velocity
+            _playerRb.angularVelocity = Vector3.zero; // Reset angular velocity            
             _playerHP.TakeDamage(_damageOnReset);
             Debug.Log("Player position reset and damage applied.");
         }
@@ -100,4 +108,6 @@ public class ResetScene : MonoBehaviour
 
         return _isAlive;
     }
+
+    public void SetStartingPos(Vector3 startingPos) => _startingPos = startingPos;
 }

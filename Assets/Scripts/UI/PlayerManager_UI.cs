@@ -16,6 +16,8 @@ public class PlayerManager_UI : MonoBehaviour
     {
         foreach (Image image in _hp)
             image.color = Color.green;
+
+        _scoreText.text = $" 0/{_maxScore}";
     }
 
 
