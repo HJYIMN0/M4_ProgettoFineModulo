@@ -37,7 +37,7 @@ public class CountdownTimer : MonoBehaviour
             //Debug.Log(_currentTime);
         }
 
-        if (_timer <= 0f)
+        if (_timer <= -1f)
         {
             _isRunning = false;
             _onTimerEnd?.Invoke();
@@ -53,16 +53,9 @@ public class CountdownTimer : MonoBehaviour
         _onTimerChange?.Invoke(_lastSecond); // Invoca subito all'inizio
     }
 
-    public void DisplayTimer()
-    {
-        _TimerCountdown.text = _currentTime.ToString();
-        //Debug.Log(_TimerCountdown.text);
-    }
-
     public void CallFadeOut()
     {
         StartCoroutine(FadeOut());
-        _canvasGroup.interactable = false;
     }
     private IEnumerator FadeOut()
     {
@@ -81,6 +74,26 @@ public class CountdownTimer : MonoBehaviour
     }
 
     public float GetTime() => maxTime - _currentTime;
+
+
+    public void DisplayTimer()
+    {
+        int totalTime = _currentTime;
+        int minutes = totalTime / 60;
+        int seconds = totalTime % 60;
+
+        string displayedTime = minutes > 0 ? $"{minutes}:{seconds:00}" : $"{seconds}";
+        _TimerCountdown.text = displayedTime;
+        //Debug.Log(_TimerCountdown.text);
+    }
+
+
+    //public void DisplayTimer()
+    //{
+    //    int displayTimer = _currentTime;
+    //    _TimerCountdown.text = _currentTime.ToString();
+    //    //Debug.Log(_TimerCountdown.text);
+    //}
 
     //public int DisplayTime(float currentTime)
     //{

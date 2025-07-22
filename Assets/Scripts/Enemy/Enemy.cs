@@ -8,10 +8,10 @@ public class Enemy : MonoBehaviour
 
     public Queue<Bullet> _bulletsQueue = new Queue<Bullet>();
     private float _shootTimer = 0f; // Timer for shooting interval
-    [SerializeField] private Bullet _bulletPreFab; // Prefab for the bullet
+    [SerializeField] protected Bullet _bulletPreFab { get; private set; } // Prefab for the bullet
     [SerializeField] private Transform _spawnLocation;
-    [SerializeField] private float _gizmoRadius = 10;
-    [SerializeField] private LayerMask _playerLayer;
+    [SerializeField] protected float _gizmoRadius = 10;
+    [SerializeField] protected LayerMask _playerLayer;
     [SerializeField] private float _shootInterval = 1f; // Time between shots
 
 
@@ -20,11 +20,6 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _gizmoRadius);
-    }
-
-    private void Start()
-    {
-        
     }
 
     private void Update()
@@ -44,7 +39,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Shoot()
+    public virtual void Shoot()
     {
         if (Physics.OverlapSphere(transform.position, _gizmoRadius, _playerLayer).Length != 0)
         {
@@ -68,7 +63,7 @@ public class Enemy : MonoBehaviour
         else Debug.Log("No player detected within range. Not shooting.");
     }
 
-    public Bullet GetBullet()
+    public virtual Bullet GetBullet()
     {
         if (_bulletsQueue.Count > 0)
         {

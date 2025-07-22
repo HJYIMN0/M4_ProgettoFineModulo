@@ -19,9 +19,11 @@ public class PlayerController : MonoBehaviour
     private Transform _cameraTransform;
     private Rigidbody _rb;
 
-    private bool _isJumping = false;
+    public bool _isJumping { get; private set; } = false;
     public bool _hasSecondJump { get; set; }
     public bool _isMoving { get; private set; }
+
+    public bool _isRunning { get; private set; }
 
     public UnityEvent<bool> _onSecondJump;
 
@@ -49,10 +51,12 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire3"))
         {
+            _isRunning = true;
             _speed *= _increasedSpeed; // Increase speed when running
         }
         if (Input.GetButtonUp("Fire3"))
         {
+            _isRunning = false;
             _speed /= _increasedSpeed; // Reset speed when not running
         }
 

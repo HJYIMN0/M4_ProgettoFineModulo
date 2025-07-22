@@ -31,6 +31,7 @@ public class PauseMenu_Ui : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            _canvasGroup.interactable = true;
             CallPauseMenu();
         }
     }
