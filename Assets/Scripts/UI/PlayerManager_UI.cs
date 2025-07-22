@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 
 public class PlayerManager_UI : MonoBehaviour
@@ -11,6 +13,14 @@ public class PlayerManager_UI : MonoBehaviour
     [SerializeField] private Image _hasDoubleJump;
     [SerializeField] private TextMeshProUGUI _scoreText;
     [SerializeField] private int _maxScore = 10;
+
+    public UnityEvent _onAllCoinsCollected;
+    private CanvasGroup _canvasGroup;
+
+    private void Awake()
+    {
+        _canvasGroup = GetComponent<CanvasGroup>();
+    }
 
     private void Start()
     {
@@ -54,6 +64,34 @@ public class PlayerManager_UI : MonoBehaviour
     public void CollectedCoins(int score)
     {
         _scoreText.text = $"{score} / {_maxScore}";
+        if (score >= _maxScore)
+        {
+            Debug.Log("Preso tutte le monete!");
+            score = _maxScore;
+            _onAllCoinsCollected?.Invoke();            
+        }
+
+    }
+
+    public void CallFadeOut()
+    {
+        StartCoroutine(FadeOut());
+        _canvasGroup.interactable = false;
+    }
+    private IEnumerator FadeOut()
+    {
+        if (_canvasGroup != null)
+        {
+            while (_canvasGroup.alpha > 0f)
+            {
+                _canvasGroup.alpha -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.Log("Manca il CanvasGroup da qualche parte!");
+        }
     }
 
     //private void Update()

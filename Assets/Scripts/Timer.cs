@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class CountdownTimer : MonoBehaviour
 
     public UnityEvent<int> _onTimerChange;
     public UnityEvent _onTimerEnd;
+
+    private CanvasGroup _canvasGroup;
 
     private void Start()
     {
@@ -55,6 +58,29 @@ public class CountdownTimer : MonoBehaviour
         _TimerCountdown.text = _currentTime.ToString();
         //Debug.Log(_TimerCountdown.text);
     }
+
+    public void CallFadeOut()
+    {
+        StartCoroutine(FadeOut());
+        _canvasGroup.interactable = false;
+    }
+    private IEnumerator FadeOut()
+    {
+        if (_canvasGroup != null)
+        {
+            while (_canvasGroup.alpha > 0f)
+            {
+                _canvasGroup.alpha -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.Log("Manca il CanvasGroup da qualche parte!");
+        }
+    }
+
+    public float GetTime() => maxTime - _currentTime;
 
     //public int DisplayTime(float currentTime)
     //{
